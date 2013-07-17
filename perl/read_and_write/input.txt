@@ -1,0 +1,9 @@
+e:\andy.zhao\knowledge\codes\perl\keyword\perl_2_1.pl
+e:\andy.zhao\knowledge\codes\perl\keyword\perl_2_2.pl
+e:\andy.zhao\knowledge\codes\perl\keyword\perl_2_3.pl
+e:\andy.zhao\knowledge\codes\perl\keyword\perl_4_1.pl
+e:\andy.zhao\knowledge\codes\perl\keyword\perl_5_3.pl
+e:\andy.zhao\knowledge\codes\perl\keyword\perl_5_4.pl
+e:\andy.zhao\knowledge\codes\perl\keyword\perl_5_5.pl
+e:\andy.zhao\knowledge\codes\perl\keyword\perl_6_3.pl
+e:\andy.zhao\knowledge\codes\perl\keyword\perl_7_1.pl

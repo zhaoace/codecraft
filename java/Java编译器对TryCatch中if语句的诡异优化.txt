@@ -1,0 +1,78 @@
+结论：
+    在try-catch语句中不要轻易使用return来跳出if，使用比较稳妥的flag标志变量吧。
+
+编译之后两个if语句跳到try之外了。
+try {
+	
+	List<BankVPosOrderDto> bankUnMatchOrders =  bankVPosOrderService.queryUnMatchBankOrders(bvpuhId);
+	if(bankUnMatchOrders == null || bankUnMatchOrders.isEmpty()) {
+		
+		bankUploadHistoryService.updateStatusIsolatedTx(bvpuhId, BankUploadHistory.BANK_HISTORY_STATUS_MATCHED);
+		logger.warn("none bank orders in bank file. bvpuhId:" + bvpuhId);
+		 log.info("ReconMatchServiceImpl matchOrders", LogStatusType.SUCCESS, String.valueOf(bvpuhId), null, null, null, null, null);
+		return;
+	}
+	selfMatch(bankUnMatchOrders, his.getTemplateName());
+	
+	List<SysOrderDto> sysUnMatchOrders = sysOrderService.queryUnMatchSysOrders(his.getOrgId());
+	if(sysUnMatchOrders == null || sysUnMatchOrders.isEmpty()) {
+		
+		bankUploadHistoryService.updateStatusIsolatedTx(bvpuhId, BankUploadHistory.BANK_HISTORY_STATUS_MATCHED);
+		logger.warn("none system orders in sys file. bvpuhId:" + bvpuhId);
+		log.info("ReconMatchServiceImpl matchOrders", LogStatusType.SUCCESS, String.valueOf(bvpuhId), null, null, null, null, null);
+		return;
+	}			
+	Map<Integer,Map<MatchKey,List<BankVPosOrderDto>>> bankOrdersGroup = groupBankOrdersByMatchFields(bankUnMatchOrders);
+	Map<Integer,Map<MatchKey,List<SysOrderDto>>> sysOrdersGroup = groupSysOrdersByMatchFields(sysUnMatchOrders);
+	startMatching(bankOrdersGroup, sysOrdersGroup);						
+	bankUploadHistoryService.updateStatusIsolatedTx(bvpuhId, BankUploadHistory.BANK_HISTORY_STATUS_MATCHED);
+	log.info("ReconMatchServiceImpl matchOrders", LogStatusType.SUCCESS, String.valueOf(bvpuhId), null, null, null, null, null);
+} catch (Exception e) {
+	log.info("ReconMatchServiceImpl matchOrders", LogStatusType.EXCEPTION, String.valueOf(bvpuhId), null, null, null, null, null);
+	bankUploadHistoryService.updateStatusIsolatedTx(bvpuhId, BankUploadHistory.BANK_HISTORY_STATUS_MATCH_EXCEPTION);
+	logger.error("cann't match bankOrders. bvpuhId is " + bvpuhId);
+}
+
+
+
+不会出现问题的写法：
+try {
+	
+	boolean isOk = true;
+	List<BankVPosOrderDto> bankUnMatchOrders =  bankVPosOrderService.queryUnMatchBankOrders(bvpuhId);
+	if(bankUnMatchOrders == null || bankUnMatchOrders.isEmpty()) {
+		
+		bankUploadHistoryService.updateStatusIsolatedTx(bvpuhId, BankUploadHistory.BANK_HISTORY_STATUS_MATCHED);
+		logger.warn("none bank orders in bank file. bvpuhId:" + bvpuhId);
+		 log.info("ReconMatchServiceImpl matchOrders", LogStatusType.SUCCESS, String.valueOf(bvpuhId), null, null, null, null, null);
+		isOk = false;
+	}
+	List<SysOrderDto> sysUnMatchOrders = null;
+	if(isOk) {
+		
+		selfMatch(bankUnMatchOrders, his.getTemplateName());
+	
+		sysUnMatchOrders  = sysOrderService.queryUnMatchSysOrders(his.getOrgId());
+	}
+	
+	if(sysUnMatchOrders == null || sysUnMatchOrders.isEmpty()) {
+		
+		bankUploadHistoryService.updateStatusIsolatedTx(bvpuhId, BankUploadHistory.BANK_HISTORY_STATUS_MATCHED);
+		logger.warn("none system orders in sys file. bvpuhId:" + bvpuhId);
+		log.info("ReconMatchServiceImpl matchOrders", LogStatusType.SUCCESS, String.valueOf(bvpuhId), null, null, null, null, null);
+		isOk = false;
+	}
+	if(isOk){
+	
+		Map<Integer,Map<MatchKey,List<BankVPosOrderDto>>> bankOrdersGroup = groupBankOrdersByMatchFields(bankUnMatchOrders);
+		Map<Integer,Map<MatchKey,List<SysOrderDto>>> sysOrdersGroup = groupSysOrdersByMatchFields(sysUnMatchOrders);
+		startMatching(bankOrdersGroup, sysOrdersGroup);						
+		bankUploadHistoryService.updateStatusIsolatedTx(bvpuhId, BankUploadHistory.BANK_HISTORY_STATUS_MATCHED);
+		log.info("ReconMatchServiceImpl matchOrders", LogStatusType.SUCCESS, String.valueOf(bvpuhId), null, null, null, null, null);
+	}
+	
+} catch (Exception e) {
+	log.info("ReconMatchServiceImpl matchOrders", LogStatusType.EXCEPTION, String.valueOf(bvpuhId), null, null, null, null, null);
+	bankUploadHistoryService.updateStatusIsolatedTx(bvpuhId, BankUploadHistory.BANK_HISTORY_STATUS_MATCH_EXCEPTION);
+	logger.error("cann't match bankOrders. bvpuhId is " + bvpuhId);
+}
