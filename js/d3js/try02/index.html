@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html >
+<head >
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <title >d3js try02 - SVG</title>
+    <script type="text/javascript" src="../d3.v2.js"></script>
+    <style>
+      body {
+        font: 10px sans-serif;
+      }
+    </style>            
+</head>
+<body >
+    <h1>d3js try02 - SVG</h1>    
+    <br>Try basic SVG <br>
+
+
+
+
+
+    <hr> 
+    <svg width="500" height="300" >       
+      <path d="M250,150 L50,80 a150,150 0 1,0 150,-150  z"
+            fill="yellow" stroke="blue" stroke-width="5" />
+    </svg>
+
+
+    <hr>
+    <svg width="500" height="100" >           
+      <path d="M 10 50 L 500 50" stroke="red"
+        stroke-linecap="round" stroke-width="1" stroke-dasharray="2,5" fill="none"/>    
+    </svg>
+
+
+    <hr>
+    <svg width="500" height="400" >
+      <path d="M300,200 h-150 a150,150 0 1,0 150,-150 z"
+            fill="red" stroke="blue" stroke-width="5" />
+      <path d="M275,175 v-150 a150,150 0 0,0 -150,150 z"
+            fill="yellow" stroke="blue" stroke-width="5" />
+        </svg>
+
+    <hr>
+    <svg width="200" height="150">
+      <path d="M 10 75 Q 50 10 100 75 T 190 75" stroke="black"
+        stroke-linecap="round" stroke-dasharray="5,10,5" fill="none"/>                
+      <path d="M 10 75 L 190 75" stroke="red"
+        stroke-linecap="round" stroke-width="1" stroke-dasharray="5,5" fill="none"/>
+    <svg>
+
+    <hr>
+    <svg width="500" height="300" >
+        <circle cx="100" cy="50" r="50" stroke="black"
+            stroke-width="0" fill="green" />
+        <circle cx="100" cy="50" r="30" stroke="black"
+            stroke-width="15" fill="red"/>
+    </svg>
+
+
+    <hr>
+</body>
+</html>
