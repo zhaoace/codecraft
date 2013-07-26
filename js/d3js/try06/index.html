@@ -21,8 +21,8 @@
 
 
     <svg width="500" height="500" >       
-      <circle id="try02" cx="250" cy="280" r="15"
-            fill="gray" stroke="black" stroke-width="3"  />
+      <circle id="try02" cx="250" cy="280" r="5"
+            fill="gray" stroke="black" stroke-width="1"  />
 
       <path id="try01" d="M250,250     L224,153 A100,100 0 0,1 275,153 Z " fill="pink" stroke="blue"></path>
 
@@ -36,8 +36,8 @@
                 .attr("fill", "blue").attr("stroke","pink").attr("transform", "translate(0,30)")
                 .transition().duration(1000).delay(1000).attr("fill", "blue").attr("stroke","pink").attr("transform", "translate(0,-10)");
             d3.select('#try02')
-                .transition().duration(1000).attr("r", "3").attr("stroke-width","1")
-                .transition().duration(1000).delay(1000).attr("r", "15").attr("stroke-width","3") ;
+                .transition().duration(1000).attr("r", "15").attr("stroke-width","3")
+                .transition().duration(1000).delay(1000).attr("r", "5").attr("stroke-width","1") ;
         });
     </script>
 
