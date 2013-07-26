@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<html >
+<head >
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <title >d3js try06 - mouse over </title>
+    <script type="text/javascript" src="../d3.v2.js"></script>
+    <script type="text/javascript" src="../jquery.js"></script>
+    <style>
+      body {
+        font: 10px sans-serif;
+      }
+    </style>            
+</head>
+<body> 
+    <h1>d3js try06 - mouse over  </h1>    
+    <p>mouse over  </p>
+
+    
+
+
+    <svg width="500" height="500" >       
+      <circle id="try02" cx="250" cy="280" r="15"
+            fill="gray" stroke="black" stroke-width="3"  />
+
+      <path id="try01" d="M250,250     L224,153 A100,100 0 0,1 275,153 Z " fill="pink" stroke="blue"></path>
+
+    </svg>
+
+
+    <script type="text/javascript">
+    
+        $("#try01").on('mouseover',function (){
+            d3.select('#try01').transition().duration(1000)
+                .attr("fill", "blue").attr("stroke","pink").attr("transform", "translate(0,30)")
+                .transition().duration(1000).delay(1000).attr("fill", "blue").attr("stroke","pink").attr("transform", "translate(0,-10)");
+            d3.select('#try02')
+                .transition().duration(1000).attr("r", "3").attr("stroke-width","1")
+                .transition().duration(1000).delay(1000).attr("r", "15").attr("stroke-width","3") ;
+        });
+    </script>
+
+
+
+    <hr>
+</body>
+</html>
