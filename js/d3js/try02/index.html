@@ -4,7 +4,7 @@
 <head >
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
-    <title >d3js try02 - SVG</title>
+    <title >d3js try02 - SVG basic</title>
     <script type="text/javascript" src="../d3.v2.js"></script>
     <style>
       body {
@@ -13,7 +13,7 @@
     </style>            
 </head>
 <body >
-    <h1>d3js try02 - SVG</h1>    
+    <h1>d3js try02 - SVG basic</h1>    
     <br>Try basic SVG <br>
 
 
@@ -21,8 +21,8 @@
 
 
     <hr> 
-    <svg width="500" height="300" >       
-      <path d="M250,150 L50,80 a150,150 0 1,0 150,-150  z"
+    <svg width="500" height="500" >       
+      <path d="M250,200 h-150 v-150  a150,150 0 0,1 150,150 "
             fill="yellow" stroke="blue" stroke-width="5" />
     </svg>
 
@@ -36,11 +36,18 @@
 
     <hr>
     <svg width="500" height="400" >
-      <path d="M300,200 h-150 a150,150 0 1,0 150,-150 z"
+<!--       <path d="M300,200 h-150 a150,150 0 1,0 150,-150 z"
             fill="red" stroke="blue" stroke-width="5" />
+ -->      
       <path d="M275,175 v-150 a150,150 0 0,0 -150,150 z"
+            fill="yellow" stroke="red" stroke-width="5" />
+      <path d="M275,175 v-150 a150,150 0 0,1 -150,150 z"
             fill="yellow" stroke="blue" stroke-width="5" />
-        </svg>
+      <path d="M275,400 v-150 a150,150 0 1,1 -150,150 z  "
+            fill="yellow" stroke="black" stroke-width="5" />
+
+
+    </svg>
 
     <hr>
     <svg width="200" height="150">
