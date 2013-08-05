@@ -38,3 +38,5 @@ p4 changes -s submitted //components/sap.viz.controls/trunk/dev/...@2013/07/01,@
 
 
 
+cd ..
+
