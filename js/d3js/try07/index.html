@@ -4,7 +4,7 @@
 <head >
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
-    <title >d3js try07 - d3  array in array data </title>
+    <title >d3js try07 - d3  1.using classed object as dataset , 2 using array in array data </title>
     <script type="text/javascript" src="../d3.v2.js"></script>
     <script type="text/javascript" src="../jquery.js"></script>
     <style>
@@ -14,12 +14,69 @@
     </style>            
 </head>
 <body> 
-    <h1>d3js try07 - d3 array in array data  </h1>    
-
+    <h1>d3js try07 -  1.using classed object as dataset , 2 using array in array data </h1>    
 
 
     <script type="text/javascript">
-    
+      //try to using class     
+
+      var Cat = {
+          createNew: function(id, age){
+            var cat = {} ;
+            cat.id  = id;
+            cat.age = age;
+            cat.makeSound = function(){ alert("喵喵喵");};
+            return cat;
+          }
+      };
+      cat01 = Cat.createNew(1,15);
+      cat02 = Cat.createNew(2,20);
+      cat03 = Cat.createNew(3,10);
+      cat04 = Cat.createNew(4,25);
+      cat05 = Cat.createNew(5,5);
+      cat06 = Cat.createNew(6,13);
+
+      var dataset = cats = [cat01,cat02,cat03,cat04,cat05,cat06] ;
+
+      //Width and height
+      var w = 500;
+      var h = 300;
+      var barPadding = 1;
+
+      //Create SVG element
+      var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+
+      svg.selectAll("rect")
+         .data(dataset)
+         .enter()
+         .append("rect")
+         .attr("x", function(d, i) {
+            return i * (w / dataset.length);
+         })
+         .attr("y", function(d) {
+            return h - (d.age * 4);
+         })
+         .attr("width", w / dataset.length - barPadding)
+         .attr("height", function(d) {
+            return d.age * 4;
+         })
+         .attr("fill", function(d) {
+          // return "rgb(0, 0, " + (d * 10) + ")";
+          // return "rgb(0, " + (d * 10) + ",0)";
+          return "rgb(" +(d.age * 10) + ",0 ,0)";
+         });  
+
+
+      
+    </script>
+
+
+    <script type="text/javascript">
+      //Using array in array
+
       //Width and height
       var w = 500;
       var h = 300;
@@ -62,58 +119,6 @@
     </script>
 
 
-
-    <script type="text/javascript">
-      //try to using class ?
-      
-
-      //Width and height
-      var w = 500;
-      var h = 300;
-      var barPadding = 1;
-
-      var dataset = [   
-            {'length' => 50 , 'width' => 20},
-            {'length' => 10 , 'width' => 20},
-            {'length' => 20 , 'width' => 20},
-            {'length' => 40 , 'width' => 20},
-            {'length' => 25 , 'width' => 20},
-            {'length' => 5 , 'width' => 20},
-            {'length' => 15 , 'width' => 20},
-            {'length' => 55 , 'width' => 20},
-       ];
-
-      
-
-      //Create SVG element
-      var svg = d3.select("body")
-            .append("svg")
-            .attr("width", w)
-            .attr("height", h);
-
-      svg.selectAll("rect")
-         .data(dataset)
-         .enter()
-         .append("rect")
-         .attr("x", function(d, i) {
-            return i * (w / dataset.length);
-         })
-         .attr("y", function(d) {
-            return h - (d[0] * 4);
-         })
-         .attr("width", w / dataset.length - barPadding)
-         .attr("height", function(d) {
-            return d[0] * 4;
-         })
-         .attr("fill", function(d) {
-          // return "rgb(0, 0, " + (d * 10) + ")";
-          // return "rgb(0, " + (d * 10) + ",0)";
-          return "rgb(" +(d[0] * 10) + ",0 ,0)";
-         });  
-
-
-      
-    </script>
 
 
 

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+
+<html >
+<head >
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <title >d3js try08 - dataset with final class  </title>
+    <script type="text/javascript" src="../d3.v2.js"></script>
+    <script type="text/javascript" src="../jquery.js"></script>
+    <style>
+      body {
+        font: 10px sans-serif;
+      }
+    </style>            
+</head>
+<body> 
+    <h1>d3js try08 - dataset with final class </h1>    
+
+
+
+
+    <script type="text/javascript">
+      //try to using class     
+
+      var TeamCodeInfo = {
+        createNew: function(  file_changes, line_changes ){
+          var team_code_info = {};
+
+          team_code_info.file_changes = {};
+          team_code_info.file_changes['add']    = file_changes['add'] ;
+          team_code_info.file_changes['modify'] = file_changes['modify'] ;
+          team_code_info.file_changes['delete'] = file_changes['delete'] ;
+
+          team_code_info.line_changes = {};
+          team_code_info.line_changes['add']    = line_changes['add'] ;
+          team_code_info.line_changes['modify'] = line_changes['modify'] ;
+          team_code_info.line_changes['delete'] = line_changes['delete'] ;
+          return team_code_info;
+        }
+      }
+
+
+
+      var DailyCodeInfo = {
+        createNew: function( date, branch ,team_code_infos ){
+          var daily_code_info = {};
+
+          daily_code_info.date = date;
+          daily_code_info[branch] = {};
+
+          var total = {};
+          total['file_changes_add']    = 0;  
+          total['file_changes_delete'] = 0;
+          total['file_changes_modify'] = 0;
+          total['line_changes_add']    = 0;
+          total['line_changes_delete'] = 0;
+          total['line_changes_modify'] = 0;
+          for (var info in team_code_infos[branch]){
+            daily_code_info[branch][info] = team_code_infos[branch][info];
+            total['file_changes_add']    += team_code_infos[branch][info]['file_changes']['add'];
+            total['file_changes_delete'] += team_code_infos[branch][info]['file_changes']['delete'];
+            total['file_changes_modify'] += team_code_infos[branch][info]['file_changes']['modify'];
+            total['line_changes_add']    += team_code_infos[branch][info]['line_changes']['add'];
+            total['line_changes_delete'] += team_code_infos[branch][info]['line_changes']['delete'];
+            total['line_changes_modify'] += team_code_infos[branch][info]['line_changes']['modify'];
+
+          }
+          daily_code_info[branch]['total'] = {};
+          daily_code_info[branch]['total']['file_changes']={};
+          daily_code_info[branch]['total']['line_changes']={};
+          daily_code_info[branch]['total']['file_changes']['add']=total['file_changes_add']    ;
+          daily_code_info[branch]['total']['file_changes']['delete']=total['file_changes_delete'] ;
+          daily_code_info[branch]['total']['file_changes']['modify']=total['file_changes_modify'] ;
+          daily_code_info[branch]['total']['line_changes']['add']=total['line_changes_add']    ;
+          daily_code_info[branch]['total']['line_changes']['delete']=total['line_changes_delete'] ;
+          daily_code_info[branch]['total']['line_changes']['modify']=total['line_changes_modify'] ;
+
+          
+          return daily_code_info;
+        }
+      }
+
+
+
+
+
+
+
+      //
+      console.log("Mock date here");
+
+      function mockteamCodeInfo(){
+        var teamCodeInfo = {};
+
+        var file_changes= {};
+        var line_changes= {};
+
+        file_changes['add']    = Math.ceil(Math.random()*100);
+        file_changes['modify'] = Math.ceil(Math.random()*100);
+        file_changes['delete'] = Math.ceil(Math.random()*100);
+        line_changes['add']    = Math.ceil(Math.random()*100);
+        line_changes['modify'] = Math.ceil(Math.random()*100);
+        line_changes['delete'] = Math.ceil(Math.random()*100);
+        return TeamCodeInfo.createNew(file_changes, line_changes);
+      }
+
+      function mockDailyCodeInfo (date, branch) {
+          var daily_code_info = {};
+
+          var my_teams = {};
+          my_teams[branch] ={};
+          my_teams[branch]['sdk']=mockteamCodeInfo('sdk');
+          my_teams[branch]['chart']=mockteamCodeInfo('chart');
+          my_teams[branch]['geo']=mockteamCodeInfo('geo');
+          my_teams[branch]['container']=mockteamCodeInfo('container');
+
+          daily_code_info = DailyCodeInfo.createNew( date, branch, my_teams);
+
+          return daily_code_info;
+      }
+
+      mock_daily_code_info = mockDailyCodeInfo(Date(),'pi');
+
+    </script>
+
+
+
+
+
+    <hr>
+</body>
+</html>

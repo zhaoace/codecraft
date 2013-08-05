@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+
+<html >
+<head >
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"></meta>
+    <title >d3js try10 - function try </title>
+    <script type="text/javascript" src="../d3.v2.js"></script>
+    <script type="text/javascript" src="../jquery.js"></script>
+    <style>
+      body {
+        font: 10px sans-serif;
+      }
+    </style>            
+</head>
+<body> 
+    <h1>d3js try10 - function try  </h1>        
+
+    <script type="text/javascript">
+    
+
+    // MathµÄÀý×Ó
+    // Math.sin(30/180*Math.PI)
+    function sectorBar ( x, y, h, angle ){
+        // x     = 250;    //barµ×¶¥µãµÄºá×ø±ê
+        // y     = 250;    //barµ×¶¥µãµÄ×Ý×ø±ê
+        // h     = 100;    //barµÄ¸ß¶È
+        // angle = 30;     //ÉÈÐÎ½Ç¶È
+        d     = Math.sin(angle/2/180*Math.PI)*h; //±ß¶¥µãµ½ÖÐÖáµÄ¿í¶È
+        dh    = Math.cos(angle/2/180*Math.PI)*h; //µ×¶¥µãµ½ÖÐÖáµÄ¸ß¶È
+        x1    = x-d;    //ÉÈÐÎ×ó±ß¶¥µã
+        y1    = y-dh;   //ÉÈÐÎ×ó±ß¶¥µã
+        x2    = x+d;    //ÉÈÐÎÓÒ±ß¶¥µã
+        y2    = y-dh;   //ÉÈÐÎÓÒ±ß¶¥µã
+
+        
+        var path =  '<path id="try01" d="M'+x+','+y+' L'+x1+','+y1+' A'+ h +','+h + ' 0 0,1 ' + x2+','+y2 +'  Z" fill="blue" stroke="black"/>';
+        return path;
+    }
+
+    function sectorBarDetail ( x, y, h, angle ){
+        d     = Math.sin(angle/2/180*Math.PI)*h; //±ß¶¥µãµ½ÖÐÖáµÄ¿í¶È
+        dh    = Math.cos(angle/2/180*Math.PI)*h; //µ×¶¥µãµ½ÖÐÖáµÄ¸ß¶È
+        x1    = x-d;    //ÉÈÐÎ×ó±ß¶¥µã
+        y1    = y-dh;   //ÉÈÐÎ×ó±ß¶¥µã
+        x2    = x+d;    //ÉÈÐÎÓÒ±ß¶¥µã
+        y2    = y-dh;   //ÉÈÐÎÓÒ±ß¶¥µã    
+        var detail =  'M'+x+','+y+' L'+x1+','+y1+' A'+ h +','+h + ' 0 0,1 ' + x2+','+y2 +'  Z';
+        return detail;
+    }
+
+
+
+
+    
+
+    $(function (){
+        var newPath = sectorBar(200,250,100,30) ;
+        $("svg").append(newPath);
+
+
+
+
+
+        // Ìí¼Ó¶¯»­Âï
+        $("#try").on('mouseover',function (){
+            d3.select('#try').transition().duration(1000)
+                .attr("fill", "blue").attr("d","pink").attr("transform", "translate(0,30)")
+                .transition().duration(1000).delay(1000).attr("fill", "blue").attr("stroke","pink").attr("transform", "translate(0,-10)");
+
+        });
+
+        $("#try02").on('mouseover',function (){
+
+            var lastDetail = $("#try02").attr('d')
+
+
+            var detail_timeline = [];
+            detail_timeline.push(sectorBarDetail(200,250,130,15));
+            detail_timeline.push(lastDetail);
+            detail_timeline.push(sectorBarDetail(200,250,80,170));
+            detail_timeline.push(sectorBarDetail(200,250,100,170));
+            detail_timeline.push(sectorBarDetail(200,250,100,150));
+
+
+
+
+            for (var d in detail_timeline){
+                console.log(detail_timeline[d]);
+            }
+
+            d3.select('#try02')
+                .transition().duration(1000).delay(0   ).attr("fill", "black" ).attr("d",detail_timeline[0])
+                //.transition().duration(1000).delay(1000).attr("fill", "blue"  ).attr("d",detail_timeline[1])
+                .transition().duration(1000).delay(1000).attr("fill", "blue" ).attr("d",detail_timeline[2])
+                .transition().duration(500).delay(2000).attr("fill", "green" ).attr("d",detail_timeline[3])
+                // transition().duration(1000).delay(3000).attr("fill", "black" ).attr("d",detail_timeline[1])
+                //transition().duration(1000).delay(3000).attr("fill", "blue"  ).attr("d",detail_timeline[1])
+                ;
+
+
+        });
+
+
+
+        $("#try03").on('mouseover',function (){
+
+            var lastDetail = $("#try03").attr('d')
+
+
+            var detail_timeline = [];
+            detail_timeline.push(sectorBarDetail(300,250,130,15));
+            // detail_timeline.push(lastDetail);
+            detail_timeline.push(sectorBarDetail(300,250,80,170));
+            detail_timeline.push(sectorBarDetail(300,250,100,170));
+            detail_timeline.push(sectorBarDetail(300,250,100,150));
+            detail_timeline.push(lastDetail);
+            
+
+
+
+
+            for (var d in detail_timeline){
+                console.log(detail_timeline[d]);
+                d3.select("#try03").transition().duration(500).delay(1000*d).attr("d",detail_timeline[d]);
+
+
+                fontsize = 40+100*Math.random()
+                d3.select("#TextElement").transition().duration(1).delay(1000*d).attr("x",400*Math.random()).attr("y",400*Math.random()).attr("style","font-family:Verdana;font-size:"+ fontsize);
+                d3.select("#circle").transition().duration(1).delay(1000*d).attr("cx",400*Math.random()).attr("cy",400*Math.random());
+            }
+
+
+        });
+
+
+
+    });
+
+
+
+    </script>
+
+
+
+
+
+
+    <svg id="vis" width="500" height="500" >       
+
+        <!-- <path id="try00" d="M250,250 L224,153 A100, 100 0 0,1 275,153  Z" fill="blue" stroke="black"/> -->
+        <!-- <path id="try01" d="M200,250 L174,153 A100, 100 0 0,1 225,153  Z" fill="none" stroke="black"></path> -->
+        <!-- <path id="try02" d="M200,250 L174,153 A100, 100 0 0,1 225,153  Z" fill="blue" stroke="black"></path> -->
+        <path id="try03" d="M300,250 L274,153 A100, 100 0 0,1 325,153  Z" fill="blue" stroke="black"></path>
+        <circle id="circle" cx="100" cy="100" r="25" fill="orange" stroke="purple" stroke-width="10"  />  
+        <text id="TextElement" style="font-family:Verdana;font-size:24" x="0" y="0">诶？</text>
+
+        
+    <hr>
+    <svg height="500" id="xxx" width="500">
+    </svg>
+    
+    
+    
+    
+    <hr>
+    
+    
+    
+
+</body>
+</html>
