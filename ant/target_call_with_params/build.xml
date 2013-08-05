@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="build" default="all" >
+    
+    <description></description>
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties" />
+
+    <property environment="env" />
+       
+    <target name="all" depends="clean,packages" > 
+
+    </target>
+    
+
+
+    
+	<target name="packages" >
+		<antcall target="unzip_package"> 
+			<param name="package_src_file" value="c:/p4/rel40/bin/sap.viz/packages/SAPHTMLViz_Examples-..zip"/> 
+			<param name="package_out_file" value="c:/p4/rel40/bin/sap.viz/api_workspace/zipagain.zip"/> 
+		</antcall> 
+
+		<foreach target="unzip_package" param="package_src_file">
+			<fileset dir="c:/p4/rel40/bin/sap.viz/packages" casesensitive="yes">
+				<include name="**/*.zip"/>
+			</fileset>
+		</foreach>
+	</target>
+
+
+
+	<target name="unzip_package">
+		<property name="package_out_file" value="${package_src_file}.again.zip" />
+		<property name="package_unzip_path" value="${package_out_file}_unzip" />
+		<echo> package_src_file ${package_src_file} </echo>
+		<echo> package_out_file ${package_out_file} </echo>
+		<echo> package_unzip_path ${package_unzip_path} </echo>
+	</target>
+
+    
+    <target name="clean" >
+
+    </target>
+    
+</project>

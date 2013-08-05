@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="build_zip" default="all" >
+    
+    <description>test for zip</description>
+    
+    <property environment="env" />
+    
+    <target name="all" depends="clean" >
+        <echo message="${env.zipped_file}"/>
+        <echo message="${env.unzip_folder}"/>
+        <unzip src="${env.zipped_file}" dest="${env.unzip_folder}"/>
+    </target>
+
+    <target name="clean" >
+    </target>
+    
+</project>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="build" default="all" >
+    
+    <description></description>
+    
+    <!-- <property environment="env" /> -->
+       
+    <target name="all" depends="clean" > 
+
+    </target>
+    
+
+
+    
+    <target name="clean" >
+
+    </target>
+    
+</project>
