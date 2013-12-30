@@ -1,3 +1,4 @@
+
 REM echo "========= set env ================="
 REM set path=C:\Program Files\Perforce;%path%
 REM 
@@ -18,25 +19,29 @@ IF EXIST bin RD /s/q bin
 MD bin 
 CD bin
 
-echo "sdk2013july"       > sdk2013july.txt
-echo "chart2013july"     > chart2013july.txt
-echo "geo2013july"       > geo2013july.txt
-echo "container2013july" > container2013july.txt
+
+
+echo "sdk2013Dec"       > sdk2013Dec.txt
+echo "chart2013Dec"     > chart2013Dec.txt
+echo "geo2013Dec"       > geo2013Dec.txt
+echo "container2013Dec" > container2013Dec.txt
 
 
 
-p4 changes -s submitted //components/sap.viz.sdk/trunk/dev/...@2013/07/01,@2013/07/30       >> sdk2013july.txt
-p4 changes -s submitted //components/sap.viz.api/trunk/dev/...@2013/07/01,@2013/07/30       >> sdk2013july.txt
+p4 changes -s submitted //components/sap.viz.sdk/trunk/dev/...@2013/11/01,@2013/11/30       >> sdk2013Dec.txt
+p4 changes -s submitted //components/sap.viz.api/trunk/dev/...@2013/11/01,@2013/11/30       >> sdk2013Dec.txt
 
-p4 changes -s submitted //components/sap.viz/trunk/dev/...@2013/07/01,@2013/07/30           >> chart2013july.txt
+p4 changes -s submitted //components/sap.viz/trunk/dev/...@2013/11/01,@2013/11/30           >> chart2013Dec.txt
+p4 changes -s submitted //components/sap.viz.chart/trunk/dev/...@2013/11/01,@2013/11/30     >> chart2013Dec.txt
 
-p4 changes -s submitted //components/sap.viz.geo/trunk/dev/...@2013/07/01,@2013/07/30       >> geo2013july.txt
+p4 changes -s submitted //components/sap.viz.geo/trunk/dev/...@2013/11/01,@2013/11/30       >> geo2013Dec.txt	
 
-p4 changes -s submitted //components/sap.viz.container/trunk/dev/...@2013/07/01,@2013/07/30 >> container2013july.txt
-p4 changes -s submitted //components/sap.viz.controls/trunk/dev/...@2013/07/01,@2013/07/30  >> container2013july.txt
-
-
+p4 changes -s submitted //components/sap.viz.container/trunk/dev/...@2013/11/01,@2013/11/30 >> container2013Dec.txt
+p4 changes -s submitted //components/sap.viz.controls/trunk/dev/...@2013/11/01,@2013/11/30  >> container2013Dec.txt
 
 
 cd ..
+:end  
+
+
 

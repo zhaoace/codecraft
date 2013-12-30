@@ -7,3 +7,7 @@
 *saponly*
 
 **/bin/*
+/bat/perforce/p4info
+
+
+**.class
