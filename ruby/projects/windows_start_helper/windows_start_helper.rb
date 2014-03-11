@@ -11,12 +11,12 @@ end
 
 
 FAV_PATH = [
-    "\\\\cnshgvi02.pvgl.sap.corp\\Builds\\components\\cvom_4.0",
-    "\\\\cnshgvi02.pvgl.sap.corp\\Builds\\components\\cvom_3.3",
-    "\\\\cnshgvi02.pvgl.sap.corp\\Builds\\components\\cvom_trunk_pi",
-    "\\\\build-drops-wdf.pgdev.sap.corp\\dropzone\\components\\cvom_4.0",
-    "\\\\build-drops-wdf.pgdev.sap.corp\\dropzone\\components\\cvom_3.3",
-    "\\\\build-drops-wdf.pgdev.sap.corp\\dropzone\\components\\cvom_trunk_pi",
+    ["SHG cvom4.0","\\\\cnshgvi02.pvgl.sap.corp\\Builds\\components\\cvom_4.0",],
+    ["SHG cvom_3.3","\\\\cnshgvi02.pvgl.sap.corp\\Builds\\components\\cvom_3.3",],
+    ["SHG cvom_trunk_pi","\\\\cnshgvi02.pvgl.sap.corp\\Builds\\components\\cvom_trunk_pi",],
+    ["WDF cvom4.0","\\\\build-drops-wdf.pgdev.sap.corp\\dropzone\\components\\cvom_4.0",],
+    ["WDF cvom_3.3","\\\\build-drops-wdf.pgdev.sap.corp\\dropzone\\components\\cvom_3.3",],
+    ["WDF cvom_trunk_pi","\\\\build-drops-wdf.pgdev.sap.corp\\dropzone\\components\\cvom_trunk_pi",],
     # "\\\\shg-cvom-ci.dhcp.pgdev.sap.corp",
 ]
 
@@ -29,11 +29,16 @@ COMMAND_LIST = {
 }
 
 
-p "Hello world. :)"
+p "Hello world. "
+p "----------------------------------------"
+p ""
 FAV_PATH.each_index do |index|
-    p "#{index}: #{FAV_PATH[index]}"
-end    
-
+    p "#{index}: #{FAV_PATH[index][0]}"
+    p ""
+end
+p "----------------------------------------"
+p "Exit by typing : e or x or exit."
+p "----------------------------------------"
 
 input = "start"
 while true do
@@ -51,7 +56,7 @@ while true do
         if chosen_index < FAV_PATH.size then  
             p chosen_index
             p FAV_PATH[chosen_index]        
-            WindowsCommander.start_path FAV_PATH[chosen_index]
+            WindowsCommander.start_path FAV_PATH[chosen_index][1]
             break
         end
     end
