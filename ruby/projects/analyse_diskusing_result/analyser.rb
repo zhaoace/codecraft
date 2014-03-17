@@ -1,19 +1,19 @@
-class Anlyser
+class Analyser
     attr_accessor :filepath
     def initialize(str)
         @filepath = str
     end
     def anlysis
-        "Anlyser anlysising!" 
+        "Analyser anlysising!" 
     end
     def show 
         File.open(@filepath, "r") { |file| p file.read   }        
     end
 end
 
-class DFAnlyser < Anlyser
+class DFAnalyser < Analyser
     def anlysis
-        p "DFAnlyser anlysising! "
+        p "DFAnalyser anlysising! "
         File.open(@filepath, "r") { |io|  
             io.readlines[2].chomp.split[-2]
         } 
@@ -21,9 +21,9 @@ class DFAnlyser < Anlyser
 end
 
 
-class JobsDUAnlyser < Anlyser
+class JobsDUAnalyser < Analyser
     def anlysis
-        p "JobsDUAnlyser anlysising! "
+        p "JobsDUAnalyser anlysising! "
 
         h = {}
         File.open(@filepath, "r") { |io|  
@@ -50,9 +50,9 @@ class JobsDUAnlyser < Anlyser
 end
 
 
-class TimestampAnlyser < Anlyser
+class TimestampAnalyser < Analyser
     def anlysis
-        p "TimestampAnlyser anlysising! "
+        p "TimestampAnalyser anlysising! "
         time = "Time: "
         File.open(@filepath, "r") { |io|  
             time_parts = io.readline.split
@@ -90,23 +90,23 @@ class TemplateToHTML
 
 end
 
-a = Anlyser.new("df_diskusing.txt")
+a = Analyser.new("df_diskusing.txt")
 a.show 
 p a.anlysis 
 
 
 p "---------------------------"
-df = DFAnlyser.new "df_diskusing.txt"
+df = DFAnalyser.new "df_diskusing.txt"
 df.show
 df_diskusing =  df.anlysis
 
 p "---------------------------"
-jobs = JobsDUAnlyser.new "jobs_diskusing.txt"
+jobs = JobsDUAnalyser.new "jobs_diskusing.txt"
 jobs.show
 top10 = jobs.anlysis[1..10]
 
 p "---------------------------"
-ts = TimestampAnlyser.new "timestamp.txt"
+ts = TimestampAnalyser.new "timestamp.txt"
 ts.show
 time = ts.anlysis
 
