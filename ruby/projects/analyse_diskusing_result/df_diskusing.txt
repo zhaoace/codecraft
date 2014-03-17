@@ -1,0 +1,5 @@
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/mapper/VolGroup00-LogVol00
+                     200861408 149889372  40640048  79% /
+/dev/sda1               101086     13063     82804  14% /boot
+tmpfs                  4087264         0   4087264   0% /dev/shm
