@@ -22,26 +22,39 @@ Return
 Return
 
 
+;-- win+alt+l  => 呼叫lync
+#!l:: 
+    Run, lync
+Return
+
+
+;-- win+alt+o  => 呼叫outlook
+#!o:: 
+    Run, outlook
+Return
+
+
+
 ;-- CTRL+ALT+A  =>利用Skitch截屏
 ^!a::
-	IfWinExist Skitch
-	{
-	    WinActivate
-	    Send, ^+5
-	}
-	else
-	{
-	    Run Skitch
-	    WinWait Skitch
-	    WinActivate
-	    Send, ^+5
-	}
+    IfWinExist Skitch
+    {
+        WinActivate
+        Send, ^+5
+    }
+    else
+    {
+        Run Skitch
+        WinWait Skitch
+        WinActivate
+        Send, ^+5
+    }
 return
 
 
 ;-- CTRL+ALT+F9 => 弹出link list，快速选择去哪里
 ^!f9::
-	Run, ruby C:\git\st\codecraft.git\ruby\projects\windows_start_helper\windows_start_helper.rb	
+    Run, ruby C:\git\st\codecraft.git\ruby\projects\windows_start_helper\windows_start_helper.rb    
 return
 
 
@@ -49,6 +62,12 @@ return
 
 ;-- 无论何时何地用 gl+空格/回车 => 弹出link list，快速选择去哪里
 ::gl::
-	Run, ruby C:\git\st\codecraft.git\ruby\projects\windows_start_helper\windows_start_helper.rb	
+    Run, ruby C:\git\st\codecraft.git\ruby\projects\windows_start_helper\windows_start_helper.rb    
+return
+
+
+;-- 无论何时何地用 subl+空格/回车 => 打开sublime
+::subl::
+    Run, C:\Program Files\Sublime Text 2\sublime_text.exe   
 return
 

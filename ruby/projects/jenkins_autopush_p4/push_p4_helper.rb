@@ -4,14 +4,18 @@
 
 ## Setting Env Variables to use.
 p4_workspace="scm_sap.viz_push_20130310"
-p4_user=ENV["p4user"]
-p4_integrate_changelist=ENV["changelist"]
-p4_operat_time=Time.now
 p4_reviewed_by="Zhao,Li"
 p4_task_id="BITVIZ-846"
 
-branch_from = ENV["integrate_from"]
-branch_to   = ENV["integrate_to"]
+
+# Getted variables
+p4_operat_time = Time.now
+p4_user        = ENV["p4user"]
+p4_changelist  = ENV["changelist"]
+branch_from    = ENV["integrate_from"]
+branch_to      = ENV["integrate_to"]
+generated_id   = 0  #start from 0
+
 
 parts=<<content_boundary
 sap.viz.sdk
@@ -33,7 +37,7 @@ Client: #{p4_workspace}
 User: #{p4_user}
 Status: new
 Description:
-    ==Summary*: Integrate from #{branch_from} #{p4_integrate_changelist} @#{p4_operat_time}
+    ==Summary*: Integrate from #{branch_from} #{p4_changelist} @#{p4_operat_time}
     ==Reviewed by*: #{p4_reviewed_by} 
     ==Task*: #{p4_task_id} 
 content_boundary
@@ -81,7 +85,7 @@ p4_integrate_statement="set p4client=#{p4_workspace}\n"
 parts.split.each do |part|
     from = "//components/#{part}/#{branch_from}/..."
     to = "//components/#{part}/#{branch_to}/..."
-    p4_integrate_statement << "p4 integrate  -o -d -i -c #{pendinglist} #{from}#{p4_integrate_changelist}  #{to}\n"
+    p4_integrate_statement << "p4 integrate  -o -d -i -c #{pendinglist} #{from}#{p4_changelist}  #{to}\n"
 end
 p4_integrate_statement<<"p4 resolve -as -dl -c #{pendinglist}\n"
 

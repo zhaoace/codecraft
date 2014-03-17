@@ -10,13 +10,15 @@ end
 
 
 
-FAV_PATH = [
+FAV_PATH = [    
+    ["WDF dropzone","\\\\build-drops-wdf.pgdev.sap.corp\\dropzone\\components",],
+    ["WDF cvom4.0","\\\\build-drops-wdf.pgdev.sap.corp\\dropzone\\components\\cvom_4.0",],
+    ["WDF cvom_3.3","\\\\build-drops-wdf.pgdev.sap.corp\\dropzone\\components\\cvom_3.3",],
+    ["WDF cvom_trunk_pi","\\\\build-drops-wdf.pgdev.sap.corp\\dropzone\\components\\cvom_trunk_pi",],
     ["SHG cvom4.0","\\\\cnshgvi02.pvgl.sap.corp\\Builds\\components\\cvom_4.0",],
     ["SHG cvom_3.3","\\\\cnshgvi02.pvgl.sap.corp\\Builds\\components\\cvom_3.3",],
     ["SHG cvom_trunk_pi","\\\\cnshgvi02.pvgl.sap.corp\\Builds\\components\\cvom_trunk_pi",],
     ["WDF cvom4.0","\\\\build-drops-wdf.pgdev.sap.corp\\dropzone\\components\\cvom_4.0",],
-    ["WDF cvom_3.3","\\\\build-drops-wdf.pgdev.sap.corp\\dropzone\\components\\cvom_3.3",],
-    ["WDF cvom_trunk_pi","\\\\build-drops-wdf.pgdev.sap.corp\\dropzone\\components\\cvom_trunk_pi",],
     # "\\\\shg-cvom-ci.dhcp.pgdev.sap.corp",
 ]
 
