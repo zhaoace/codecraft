@@ -25,6 +25,45 @@ lastTitle=0
 return
 
 
+
+
+
+;============ alt + win + [] 用来快速布置当前程序窗口 , 
+；==== 由于通用方法很繁琐，我果断的用了hardcode的窗口位置。
+;--------- alt+win+1
+#!1::
+    WinGetActiveTitle , nowTitle
+    WinMove, %nowTitle%, , -1920, 120, 960, 1080
+return
+
+;--------- alt+win+2
+#!2::
+    WinGetActiveTitle , nowTitle
+    WinMove, %nowTitle%, , -960, 120, 960, 1080
+return
+
+;--------- alt+win+3
+#!3::
+    WinGetActiveTitle , nowTitle
+    WinMove, %nowTitle%, , 0, 0, 917, 1200
+return
+
+;--------- alt+win+4
+#!4::
+    WinGetActiveTitle , nowTitle
+    WinMove, %nowTitle%, , 917, 0, 917, 1200
+return
+
+
+
+
+
+;============= 固定窗口如果没有固定住，或者解除固定
+^#!t::
+    WinGetActiveTitle , nowTitle
+    WinSet AlwaysOnTop, TOGGLE, %nowTitle%, 
+return
+
 ;==================== 系统音量
 ;-- ctrl+win+up  => 增大音量
 ^#up:: 
