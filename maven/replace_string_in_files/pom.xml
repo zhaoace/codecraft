@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>me.zhaoli.mvn</groupId>
+  <artifactId>replace_string_in_files</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+
+  <build>
+    <filters>
+      <filter>src/main/filters/default.properties</filter>
+    </filters>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+  </build>
+
+
+
+</project>
+
