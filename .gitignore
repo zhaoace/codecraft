@@ -15,3 +15,6 @@ ruby/projects/genP4script/output/
 **sap.*
 python/learnpythonthehardway.org/test2.txt
 *.pyc
+python/projects/hello_world/
+python/learnpythonthehardway.org/temp.py
+ruby/temp.rb
