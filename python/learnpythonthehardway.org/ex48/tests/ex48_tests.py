@@ -57,3 +57,63 @@ def test_mix():
                         ('error','fuck'),
                         ('direction','north') ])
 
+
+
+
+#================== for ex49
+word_list=  [('noun','bear'),
+                 ('number', 11 ),
+                 ('verb','go'),
+                 ('stop','the'),
+                 ('direction','north') ]
+
+
+def test_peek():
+    result = lexicon.peek(word_list)
+    assert_equal(result , 'noun')
+
+    result = lexicon.peek(None)
+    assert_equal(result , None )
+
+
+def test_match():
+    result = lexicon.match(word_list,  'noun')
+    assert_equal(result , ('noun', 'bear'))
+
+    result = lexicon.match(None, None)
+    assert_equal(result , None )
+
+
+# def test_skip():
+#     wl = word_list
+#     result =  lexicon.skip(wl, "stop")
+#     assert_equal(result ,  [('number', 11 ),
+#                  ('verb','go'),
+#                  ('stop','the'),
+#                  ('direction','north') ])
+
+
+
+def test_parse_verb():
+    pass
+
+def test_parse_object():
+    pass
+
+
+
+def test_parse_subject():
+    pass
+
+
+def test_parse_sentence():
+    pass
+
+def test_parse_sentence_with_error():
+
+
+    pass
+
+
+
+
