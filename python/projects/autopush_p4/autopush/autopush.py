@@ -57,7 +57,8 @@ def validate_params():
     if len(PARAM_BOX) is not 0:
         for param_name in  sorted(PARAM_BOX.keys()):
             if PARAM_BOX[param_name] is not None:
-                print param_name , "  " , PARAM_BOX[param_name] , " !!"
+                print param_name , "  " , PARAM_BOX[param_name] , " ."
+                pass
             else:
                 return validate_fail(param_name)
 
@@ -91,12 +92,21 @@ def abort_process(msg="Something wrong"):
 
 
 
-
-
-
+def debug_init_env():
+    os.environ['p4user'] = "p4user"
+    os.environ['changelist'] = "changelist"
+    os.environ['integrate_from'] = "integrate_from"
+    os.environ['integrate_to'] = "integrate_to"
+    os.environ['push_requester'] = "push_requester"
+    os.environ['push_reason'] = "push_reason"
 
 # main process
 if __name__ == '__main__':
+
+    debug = True
+    if debug:
+        debug_init_env()
+
     get_params()
     if validate_params():
         generate_p4_script()

@@ -21,12 +21,7 @@ def test_get_params():
     assert_equal(result , "p4_user")
 
 def test_validate_params():
-    os.environ['p4user'] = "p4user"
-    os.environ['changelist'] = "changelist"
-    os.environ['integrate_from'] = "integrate_from"
-    os.environ['integrate_to'] = "integrate_to"
-    os.environ['push_requester'] = "push_requester"
-    os.environ['push_reason'] = "push_reason"
+    debug_init_env()
     get_params()
     assert  validate_params()
 
