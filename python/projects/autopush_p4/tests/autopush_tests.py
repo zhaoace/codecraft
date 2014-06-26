@@ -10,7 +10,6 @@ CMD_SUCCESS = 0
 def test_must_pass():
     assert_equal(True, validate_pass())
 
-<<<<<<< HEAD
 
 def test_must_fail():
     assert_equal(False, validate_fail())
@@ -39,28 +38,4 @@ def test_generate_p4_script():
 def test_system_run_p4_script():
     result = system_run_p4_script()
     assert_equal(result, CMD_SUCCESS)
-    assert True
-=======
-
-def test_must_fail():
-    assert_equal(False, validate_fail())
-
->>>>>>> 220ab8b7f205865058d9147e6bad923edaf0d8e6
-
-def test_generate_p4_script():
-    generate_p4_script()
-    assert os.path.exists(FILE_BOX[0])
-
-
-def test_system_run_p4_script():
-    result = system_run_p4_script()
-    assert_equal(result, CMD_SUCCESS)
-    print "xxxxxxxxxx"
-    assert True
-
-
-def test_get_params():
-    os.putenv("PATH", "ZHAOLI")
-    print 'os.getenv("PATH") ',
-    print os.getenv("PATH")
     assert True
