@@ -8,7 +8,7 @@ def test_get_nowtime():
     assert result is not None
 
 
-# def test_must_fail():
-#      assert_equal(False, True)
+def test_must_fail():
+     assert_equal(False, True)
 
 
