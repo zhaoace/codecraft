@@ -5,15 +5,8 @@ import time
 import utils
 
 
-FILE_BOX=[
-"1_run_p4.bat"
-]
-PARAM_BOX={
-
-}
-
-
-
+FILE_BOX=[]
+PARAM_BOX={}
 
 def log(func):
     def _deco():
@@ -30,7 +23,7 @@ def log(func):
 def get_params():
     """Get params from jenkins shell"""
     PARAM_BOX['PATH'] = os.getenv("PATH")
-    PARAM_BOX['working_time'] = time.strftime("%Y-%m-%d %H:%M:%S")
+    PARAM_BOX['p4_operat_time'] = time.strftime("%Y-%m-%d %H:%M:%S")
     PARAM_BOX['p4_user']        =     os.getenv("p4user")
     PARAM_BOX['p4_changelist']  =     os.getenv("changelist")
     PARAM_BOX['branch_from']    =     os.getenv("integrate_from")
@@ -38,6 +31,10 @@ def get_params():
     PARAM_BOX['push_requester'] =     os.getenv("push_requester")
     PARAM_BOX['push_reason']    =     os.getenv("push_reason")
     PARAM_BOX['parts']    =     ["sap.viz.sdk", "sap.viz.chart", "sap.viz.api", "sap.viz.extension", "sap.viz", "sap.viz.geo", "sap.viz.controls"]
+    PARAM_BOX['p4_workspace']    =     os.getenv("p4_workspace")
+    PARAM_BOX['p4_task_id']    =     os.getenv("p4_task_id")
+    PARAM_BOX['p4_reviewed_by']    =     os.getenv("p4_reviewed_by")
+    PARAM_BOX['p4_action']    =     os.getenv("p4_action")
 
 
 def validate_fail(reason=""):
@@ -67,17 +64,56 @@ def validate_params():
         return validate_fail("PARAM_BOX is empty, please set your params.")
 
 
+
+def generate_pendinglist():
+    pending_list_content = """Change: new
+Client: %s
+User: %s
+Status: new
+Description:
+    ==Summary*: Integrate from %s %s @%s .
+    Push request by %s.
+    Push for %s.
+    ==Reviewed by*: %s
+    ==Task*: %s
+    ==Action*:%s
+        """ % ( PARAM_BOX['p4_workspace'], PARAM_BOX['p4_user'], PARAM_BOX['branch_from'],
+                    PARAM_BOX['p4_changelist'], PARAM_BOX['p4_operat_time'], PARAM_BOX['push_requester'],
+                    PARAM_BOX['push_reason'], PARAM_BOX['p4_reviewed_by'], PARAM_BOX['p4_task_id'],
+                    PARAM_BOX['p4_action']   )
+    utils.write_to(FILE_BOX, "pending_list.txt", pending_list_content)
+
+
 @log
 def generate_p4_script():
     """Generate a .bat to using for the perforce actions"""
-    p4_run_content = "echo generate_p4_script()"
-    utils.write_to(FILE_BOX[0], p4_run_content)
+    generate_pendinglist()
+
+    p4_run_content = "echo generate_p4_script(111)"
+    for part in PARAM_BOX['parts']:
+        print "[part > ]", part
+    utils.write_to(FILE_BOX, "run_p4.bat", p4_run_content)
+    p4_run_content = "echo generate_p4_script(222)"
+    utils.write_to(FILE_BOX, "run_p4_2.bat", p4_run_content)
+
+
 
 
 @log
 def system_run_p4_script():
     """Let system run the .bat to work with perforce"""
-    return os.system(FILE_BOX[0])
+    CMD_SUCCESS = 0
+    CMD_FAIL = -1
+    print FILE_BOX
+    for filename in FILE_BOX:
+        if  ".bat" in filename :
+            print filename  , "is batch."
+            if os.system(filename) != CMD_SUCCESS:
+                return CMD_FAIL;
+        else:
+            print filename  , "is not batch."
+    return CMD_SUCCESS
+
 
 
 @log
@@ -93,12 +129,16 @@ def abort_process(msg="Something wrong"):
 
 
 def debug_init_env():
-    os.environ['p4user'] = "p4user"
-    os.environ['changelist'] = "changelist"
-    os.environ['integrate_from'] = "integrate_from"
-    os.environ['integrate_to'] = "integrate_to"
-    os.environ['push_requester'] = "push_requester"
-    os.environ['push_reason'] = "push_reason"
+    os.environ['p4_workspace'] = "DEBUG_P4_WORKSPACE"
+    os.environ['p4user'] = "DEBUG_P4USER"
+    os.environ['changelist'] = "DEBUG_CHANGELIST"
+    os.environ['integrate_from'] = "DEBUG_INTEGRATE_FROM"
+    os.environ['integrate_to'] = "DEBUG_INTEGRATE_TO"
+    os.environ['push_requester'] = "DEBUG_PUSH_REQUESTER"
+    os.environ['push_reason'] = "DEBUG_PUSH_REASON"
+    os.environ['p4_task_id'] = "DEBUG_P4_TASK_ID"
+    os.environ['p4_reviewed_by'] = "DEBUG_P4_REVIEWED_BY"
+    os.environ['p4_action'] = "DEBUG_P4_ACTION"
 
 # main process
 if __name__ == '__main__':
@@ -114,5 +154,10 @@ if __name__ == '__main__':
         anlysis_logs()
     else:
         abort_process()
+
+
+    # if debug:
+    #     for filename in FILE_BOX:
+    #         os.remove(filename)
 
 
