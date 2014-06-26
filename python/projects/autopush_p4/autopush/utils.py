@@ -1,7 +1,7 @@
 import time
 import os
 
-def get_nowtime():
-    p4_operat_time = time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
-    print p4_operat_time
-    return p4_operat_time
+def write_to(filename, file_content):
+    file_handle = open(filename, 'w')
+    file_handle.write(file_content)
+    file_handle.close()
