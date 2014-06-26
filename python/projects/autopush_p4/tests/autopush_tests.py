@@ -5,10 +5,9 @@ import time
 
 
 
-def test_get_nowtime():
-    result = autopush.get_nowtime()
+def test_must_pass():
     time.sleep(60)
-    assert result is not None
+    assert True
 
 
 # def test_must_fail():
