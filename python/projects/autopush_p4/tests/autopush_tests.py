@@ -6,7 +6,7 @@ import time
 
 
 def test_must_pass():
-    time.sleep(60)
+    # time.sleep(60)
     assert True
 
 
