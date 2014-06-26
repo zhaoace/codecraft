@@ -1,0 +1,11 @@
+<project default="get_from_http" >
+
+    <target name="get_from_http" >
+        <property name="http_url" value="http://www.baidu.com"/>
+        <get src="${http_url}" dest="signlog.txt"/>
+        <loadfile property="RESULT" srcFile="signlog.txt"/>
+        <echo message="${RESULT}" />
+        <echo message="Code signing completed." />
+    </target>
+
+</project>
