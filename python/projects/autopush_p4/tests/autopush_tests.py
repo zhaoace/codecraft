@@ -25,12 +25,16 @@ def test_validate_params():
     get_params()
     assert  validate_params()
 
-def test_generate_p4_script():
-    generate_p4_script()
-    assert os.path.exists(FILE_BOX[0])
+# def test_generate_p4_script():
+#     generate_p4_script()
+#     assert os.path.exists(FILE_BOX[0])
 
 
 def test_system_run_p4_script():
     result = system_run_p4_script()
     assert_equal(result, CMD_SUCCESS)
     assert True
+
+def clean():
+    for filename in FILE_BOX:
+        os.remove(filename)
