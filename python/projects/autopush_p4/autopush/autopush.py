@@ -5,7 +5,7 @@ import time
 import utils
 
 
-# debug = True
+debug = False
 
 
 FILE_BOX=[]
