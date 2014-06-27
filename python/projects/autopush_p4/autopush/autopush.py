@@ -5,8 +5,11 @@ import time
 import utils
 
 
+# debug = True
+
+
 FILE_BOX=[]
-PARAM_BOX={}
+PARAM_BOX={ 'do_submmit':"no"}
 
 def log(func):
     def _deco():
@@ -35,6 +38,7 @@ def get_params():
     PARAM_BOX['p4_task_id']    =     os.getenv("p4_task_id")
     PARAM_BOX['p4_reviewed_by']    =     os.getenv("p4_reviewed_by")
     PARAM_BOX['p4_action']    =     os.getenv("p4_action")
+    PARAM_BOX['do_submmit']    =     os.getenv("do_submmit")
 
 
 def validate_fail(reason=""):
@@ -64,9 +68,17 @@ def validate_params():
         return validate_fail("PARAM_BOX is empty, please set your params.")
 
 
+def debug_add_p4login(bat_contant):
+    if debug:
+        p4login = open("p4login.bat","r")
+        p4login_content = p4login.read()
+        return p4login_content + bat_contant
+    else:
+        return bat_contant
 
-def generate_pendinglist():
-    pending_list_content = """Change: new
+
+def create_changelist_txt_for_checkin():
+    pending_list_txt_content = """Change: new
 Client: %s
 User: %s
 Status: new
@@ -81,38 +93,57 @@ Description:
                     PARAM_BOX['p4_changelist'], PARAM_BOX['p4_operat_time'], PARAM_BOX['push_requester'],
                     PARAM_BOX['push_reason'], PARAM_BOX['p4_reviewed_by'], PARAM_BOX['p4_task_id'],
                     PARAM_BOX['p4_action']   )
-    utils.write_to(FILE_BOX, "pending_list.txt", pending_list_content)
+    utils.write_to(FILE_BOX, "pending_list.txt", pending_list_txt_content)
+
+
+
+
+
+def create_pendinglist_on_p4():
+    create_changelist_txt_for_checkin()
+    run_p4_create_pendinglist_bat_content = """echo Create a changelist for push using.
+p4 change -i < %s
+""" % FILE_BOX[-1]
+    run_p4_create_pendinglist_bat_content = debug_add_p4login(run_p4_create_pendinglist_bat_content)
+    utils.write_to(FILE_BOX, "run_p4_create_pendinglist.bat", run_p4_create_pendinglist_bat_content)
+    os.system(FILE_BOX[-1])
+
+    get_pendinglist_id_txt = "%s_get_pendinglist_id.txt" % len(FILE_BOX)
+    FILE_BOX.append(get_pendinglist_id_txt)
+    run_p4_get_pendinglist_id_content = 'p4 changes -m 1 -c %s -s pending > %s' % (PARAM_BOX["p4_workspace"] , get_pendinglist_id_txt)
+    run_p4_get_pendinglist_id_content = debug_add_p4login(run_p4_get_pendinglist_id_content)
+    utils.write_to(FILE_BOX, "run_p4_get_pendinglist_id.bat", run_p4_get_pendinglist_id_content)
+    os.system(FILE_BOX[-1])
+
+    p4_response_for_get_pendinglist = open(FILE_BOX[-2]).read() #read %s_get_pendinglist_id.txt and get the pending list id
+    pendinglist_id = p4_response_for_get_pendinglist.split()[1]
+    PARAM_BOX["pendinglist_id"] = pendinglist_id
+    print "pendinglist_id is", PARAM_BOX["pendinglist_id"]
+
+
 
 
 @log
-def generate_p4_script():
-    """Generate a .bat to using for the perforce actions"""
-    generate_pendinglist()
+def integrate_procss_on_p4():
+    """Create scripte and run it. """
+    run_p4_integrate_content = "echo integrate_procss_on_p4()\n"
 
-    p4_run_content = "echo generate_p4_script(111)"
     for part in PARAM_BOX['parts']:
-        print "[part > ]", part
-    utils.write_to(FILE_BOX, "run_p4.bat", p4_run_content)
-    p4_run_content = "echo generate_p4_script(222)"
-    utils.write_to(FILE_BOX, "run_p4_2.bat", p4_run_content)
+        from_path = "//components/%s/%s/..."% (part, PARAM_BOX["branch_from"])
+        to_path = "//components/%s/%s/..."% (part, PARAM_BOX["branch_to"])
+        p4_operation = "\np4 integrate  -v -d -i -c %s %s%s  %s" % (PARAM_BOX["pendinglist_id"],from_path,PARAM_BOX["p4_changelist"],to_path)
+        run_p4_integrate_content  += p4_operation
+        # p4_operation = "p4 integrate  -v -d -i -c #{pendinglist} #{from}#{p4_changelist}  #{to}" % (PARAM_BOX["branch_to"],PARAM_BOX["branch_to"],PARAM_BOX["branch_to"],PARAM_BOX["branch_to"], ,)
+        print "[p4_operation > ]", p4_operation
 
+    run_p4_integrate_content += "\n p4 resolve -as -dl -c %s" % PARAM_BOX["pendinglist_id"]
 
+    if  PARAM_BOX["do_submmit"].lower() != "no" :
+        run_p4_integrate_content += "\n p4 submit -c %s "  % PARAM_BOX["pendinglist_id"]
+    run_p4_integrate_content = debug_add_p4login(run_p4_integrate_content)
+    utils.write_to(FILE_BOX, "run_p4_integrate.bat", run_p4_integrate_content)
+    os.system(FILE_BOX[-1])
 
-
-@log
-def system_run_p4_script():
-    """Let system run the .bat to work with perforce"""
-    CMD_SUCCESS = 0
-    CMD_FAIL = -1
-    print FILE_BOX
-    for filename in FILE_BOX:
-        if  ".bat" in filename :
-            print filename  , "is batch."
-            if os.system(filename) != CMD_SUCCESS:
-                return CMD_FAIL;
-        else:
-            print filename  , "is not batch."
-    return CMD_SUCCESS
 
 
 
@@ -121,43 +152,23 @@ def anlysis_logs():
     """Anlysis logs form runing , create a form to read easily ."""
 
 
-
 def abort_process(msg="Something wrong"):
     """Abort process if error found or we stoped."""
     print "\n[PROCESS ABORTED] %s  , @%s.\n\n" % (msg,  time.strftime("%Y-%m-%d %H:%M:%S"))
 
 
 
-def debug_init_env():
-    os.environ['p4_workspace'] = "DEBUG_P4_WORKSPACE"
-    os.environ['p4user'] = "DEBUG_P4USER"
-    os.environ['changelist'] = "DEBUG_CHANGELIST"
-    os.environ['integrate_from'] = "DEBUG_INTEGRATE_FROM"
-    os.environ['integrate_to'] = "DEBUG_INTEGRATE_TO"
-    os.environ['push_requester'] = "DEBUG_PUSH_REQUESTER"
-    os.environ['push_reason'] = "DEBUG_PUSH_REASON"
-    os.environ['p4_task_id'] = "DEBUG_P4_TASK_ID"
-    os.environ['p4_reviewed_by'] = "DEBUG_P4_REVIEWED_BY"
-    os.environ['p4_action'] = "DEBUG_P4_ACTION"
-
 # main process
 if __name__ == '__main__':
-
-    debug = True
     if debug:
         debug_init_env()
 
     get_params()
     if validate_params():
-        generate_p4_script()
-        system_run_p4_script()
+        create_pendinglist_on_p4()
+        integrate_procss_on_p4()
         anlysis_logs()
     else:
         abort_process()
-
-
-    # if debug:
-    #     for filename in FILE_BOX:
-    #         os.remove(filename)
 
 
