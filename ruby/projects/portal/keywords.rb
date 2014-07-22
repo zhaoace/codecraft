@@ -47,10 +47,9 @@ class Keywords
         end
 
         @kw_data.each do |kwdata|
-            p /#{reg}/.match(kwdata[2]).to_s
-            result <<  /#{reg}/.match(kwdata[2]).to_s   if /#{reg}/.match(kwdata[2])
+            kw_match = /#{reg}/.match(kwdata[2])
+            result <<  kw_match.to_s if kw_match
         end
-        p result = result
         return result
     end
 
