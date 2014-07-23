@@ -1,0 +1,12 @@
+\\build-drops-wdf.pgdev.sap.corp\dropzone\components
+\\build-drops-wdf.pgdev.sap.corp\dropzone\components\cvom_4.0
+\\build-drops-wdf.pgdev.sap.corp\dropzone\components\cvom_3.3
+\\build-drops-wdf.pgdev.sap.corp\dropzone\components\cvom_trunk_pi
+\\build-drops-wdf.pgdev.sap.corp\dropzone\components\cvom_trunk_dev
+\\cnshgvi02.pvgl.sap.corp\Builds\components\cvom_4.0
+\\cnshgvi02.pvgl.sap.corp\Builds\components\cvom_3.3
+\\cnshgvi02.pvgl.sap.corp\Builds\components\cvom_trunk_pi
+\\cnshgvi02.pvgl.sap.corp\Builds\components\cvom_trunk_dev
+\\build-drops-vc.pgdev.sap.corp\dropzone\aurora_dev\aurora41_pi_xcelsius
+\\build-drops-vc.pgdev.sap.corp\dropzone\aurora_dev\aurora41_sp_cor
+\\cnpvgl000.pvgl.sap.corp\Restricted\BI_ALL\LeanDI\Softwares

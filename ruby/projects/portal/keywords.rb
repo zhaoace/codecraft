@@ -1,39 +1,31 @@
-
-
-
-
 class Keywords
-
-
-
-
-
-
     module Type
       PATH         =           0x1
       FAST         =           0x2
     end
 
+    def self.load_paths
+        my_fav_paths =[]
+        File.readlines("my_fav_paths.txt").each do |line|
+            my_fav_paths << line
+        end
+    end
+    @my_fav_paths = self.load_paths()
+    def self.my_fav_paths
+        @my_fav_paths
+    end
 
-
+    def self.set_data
+        data = []
+        @my_fav_paths.each do |my_fav_path|
+            data << [ Type::PATH, "time" , my_fav_path]
+        end
+        return data
+    end
+    @kw_data = self.set_data()
     def self.kw_data
         return @kw_data
     end
-    @kw_data =[
-        [Type::PATH, "WDF dropzone","\\\\build-drops-wdf.pgdev.sap.corp\\dropzone\\components",],
-        [Type::PATH, "WDF cvom4.0","\\\\build-drops-wdf.pgdev.sap.corp\\dropzone\\components\\cvom_4.0",],
-        [Type::PATH, "WDF cvom_3.3","\\\\build-drops-wdf.pgdev.sap.corp\\dropzone\\components\\cvom_3.3",],
-        [Type::PATH, "WDF cvom_trunk_pi","\\\\build-drops-wdf.pgdev.sap.corp\\dropzone\\components\\cvom_trunk_pi",],
-        [Type::PATH, "WDF cvom_trunk_dev","\\\\build-drops-wdf.pgdev.sap.corp\\dropzone\\components\\cvom_trunk_dev",],
-        [Type::PATH, "SHG cvom4.0","\\\\cnshgvi02.pvgl.sap.corp\\Builds\\components\\cvom_4.0",],
-        [Type::PATH, "SHG cvom_3.3","\\\\cnshgvi02.pvgl.sap.corp\\Builds\\components\\cvom_3.3",],
-        [Type::PATH, "SHG cvom_trunk_pi","\\\\cnshgvi02.pvgl.sap.corp\\Builds\\components\\cvom_trunk_pi",],
-        [Type::PATH, "SHG cvom_trunk_dev","\\\\cnshgvi02.pvgl.sap.corp\\Builds\\components\\cvom_trunk_dev",],
-        [Type::PATH, "VC aurora41_pi_xcelsius ","\\\\build-drops-vc.pgdev.sap.corp\\dropzone\\aurora_dev\\aurora41_pi_xcelsius",],
-        [Type::PATH, "VC aurora41_sp_cor ","\\\\build-drops-vc.pgdev.sap.corp\\dropzone\\aurora_dev\\aurora41_sp_cor",],
-    ]
-
-
 
     def self.guess key
         result = []
@@ -47,7 +39,7 @@ class Keywords
         end
 
         @kw_data.each do |kwdata|
-            kw_match = /#{reg}/.match(kwdata[2])
+            kw_match = /#{reg}/i.match(kwdata[2])
             result <<  kw_match.to_s if kw_match
         end
         return result
@@ -55,5 +47,3 @@ class Keywords
 
 
 end
-
-
