@@ -1,7 +1,7 @@
 
 echo off
 
-set BASE_STR="c:\anywhere\yes\or\no"
+set BASE_STR=c:\anywhere\yes\or\no
 set TAKEN=o
 set VALUE=bbbb
 Setlocal Enabledelayedexpansion
