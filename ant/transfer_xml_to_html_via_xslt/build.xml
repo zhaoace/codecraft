@@ -1,0 +1,10 @@
+<project name="GenerateReport" default="main">
+	<property environment="env"/>
+	<buildnumber/>
+	<target name="main">
+		<xslt in="hello.xml" out="Test-${build.number}.html"
+				style="resultFormat.xsl"/>
+	</target>
+
+
+</project>
