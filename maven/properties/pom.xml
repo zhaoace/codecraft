@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.zhaoace</groupId>
+    <artifactId>zhaoace.output_properties</artifactId>
+    <version>5.1.0-SNAPSHOT</version>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <driver.path>${project.build.directory}/tp/driver</driver.path>
+        <unittest.skip>false</unittest.skip>
+    </properties>
+
+    <build>
+        <defaultGoal>install</defaultGoal>
+
+
+        <resources>
+            <resource>
+                <directory>${project.basedir}</directory>
+                <includes>
+                    <include>app_version.properties</include>
+                </includes>
+                <filtering>true</filtering>
+                <targetPath>${project.build.directory}/not_at_all</targetPath>
+            </resource>
+        </resources>
+
+
+        <outputDirectory>${project.build.directory}/bin</outputDirectory>
+        <sourceDirectory>${project.basedir}/src/main</sourceDirectory>
+
+
+        <plugins>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>properties-maven-plugin</artifactId>
+                <version>1.0-tc</version>
+                <executions>
+                    <execution>
+                        <id>yyy</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>write-project-properties</goal>
+                        </goals>
+                        <configuration>
+                            <outputFile>${project.basedir}/propertes.properties</outputFile>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>xxx </id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>write-active-profile-properties</goal>
+                        </goals>
+                        <configuration>
+                            <outputFile>${project.basedir}/propertes2.properties</outputFile>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+
+
+
+    </build>
+</project>

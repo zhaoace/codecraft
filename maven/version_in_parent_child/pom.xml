@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.zhaoace</groupId>
+    <artifactId>zhaoace.output_properties.parent</artifactId>
+    <version>5.1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <modules>
+        <module>child</module>
+    </modules>
+
+
+    <dependencies>
+    </dependencies>
+
+    <build>
+        <defaultGoal>install</defaultGoal>
+
+
+        <resources>
+            <resource>
+                <directory>${project.basedir}</directory>
+                <includes>
+                    <include>app_version.properties</include>
+                </includes>
+                <filtering>true</filtering>
+                <targetPath>${project.build.directory}/not_at_all</targetPath>
+            </resource>
+        </resources>
+
+
+        <outputDirectory>${project.build.directory}/bin</outputDirectory>
+        <sourceDirectory>${project.basedir}/src/main</sourceDirectory>
+    </build>
+</project>
