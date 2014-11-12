@@ -1,0 +1,14 @@
+{
+  "name": "git",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "replace": "latest",
+    "gift": "~0.4.3",
+    "coffee-script": "~1.8.0"
+
+  }
+}
