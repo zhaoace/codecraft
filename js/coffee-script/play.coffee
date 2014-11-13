@@ -1,12 +1,22 @@
 
 {exec} = require 'child_process'
 p = (x) -> console.log x
-p "play.coffee"
+# p "play.coffee"
 
 
 
+f = ()-> p "f called."
 
+function1 =  (err, callback) ->
+    p "function1 called."
+    return callback err if err
+    return callback null, "return02"
 
+function2 =  (message, callback) ->
+    p "function2 start: #{message}"
+    return callback err if err
+    return callback null
 
-nums = for num in [15...1] by 2
-
+x = {}
+x =  function1 "err" , f
+p x
