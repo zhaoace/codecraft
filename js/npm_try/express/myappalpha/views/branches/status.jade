@@ -1,0 +1,29 @@
+extends ../layout
+
+block content
+  h1= title.name
+  hr
+  table.table.table-hover#table
+    caption
+        h1 Branches Status
+    thead.thead
+      tr
+        th Branch Name
+        th Status
+        th Owner
+        th Parent Branch
+        th BirthDay
+        th ExpireDay
+    tbody
+      - for (var i in branchesStatus)
+        tr
+          td= branchesStatus[i].name
+          td= branchesStatus[i].owner
+          td= branchesStatus[i].from
+          td Parent Branch
+          td #{branchesStatus[i]}
+          td ExpireDay
+  hr
+  p param=#{branchesStatus}
+
+

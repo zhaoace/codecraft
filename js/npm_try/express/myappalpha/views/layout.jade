@@ -2,6 +2,23 @@ doctype html
 html
   head
     title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css')
   body
-    block content
+    header.bg-info
+        p <br>
+        a(href="/") home
+        a(href="/branches/status")  >  branch status
+        a(href="/branches/edit") |  branche edit
+        p <br>
+        //- p header
+
+    .container
+      .row
+        .col
+          block content
+    footer.bg-info
+        p <br>
+        a(href="/") home
+        p <br>
+        //- p footer
+
