@@ -1,0 +1,48 @@
+MongoDB shell version: 2.6.5
+connecting to: test
+> use firstSchema
+switched to db firstSchema
+> db.first_collection.help()
+DBCollection help
+        db.first_collection.find().help() - show DBCursor help
+        db.first_collection.count()
+        db.first_collection.copyTo(newColl) - duplicates collection by copying all documents to newColl; no indexes are copied.
+        db.first_collection.convertToCapped(maxBytes) - calls {convertToCapped:'first_collection', size:maxBytes}} command
+        db.first_collection.dataSize()
+        db.first_collection.distinct( key ) - e.g. db.first_collection.distinct('x' )
+        db.first_collection.drop() drop the collection
+        db.first_collection.dropIndex(index) - e.g. db.first_collection.dropIndex( "indexName" ) or db.first_collection.dropIndex( { "indexKey" : 1 } )
+        db.first_collection.dropIndexes()
+        db.first_collection.ensureIndex(keypattern[,options]) - options is an object with these possible fields: name, unique, dropDups
+        db.first_collection.reIndex()
+        db.first_collection.find([query],[fields]) - query is an optional query filter. fields is optional set of fields to return.
+                                                      e.g. db.first_collection.find( {x:77} , {name:1, x:1} )
+        db.first_collection.find(...).count()
+        db.first_collection.find(...).limit(n)
+        db.first_collection.find(...).skip(n)
+        db.first_collection.find(...).sort(...)
+        db.first_collection.findOne([query])
+        db.first_collection.findAndModify( { update : ... , remove : bool [, query: {}, sort: {}, 'new': false] } )
+        db.first_collection.getDB() get DB object associated with collection
+        db.first_collection.getPlanCache() get query plan cache associated with collection
+        db.first_collection.getIndexes()
+        db.first_collection.group( { key : ..., initial: ..., reduce : ...[, cond: ...] } )
+        db.first_collection.insert(obj)
+        db.first_collection.mapReduce( mapFunction , reduceFunction , <optional params> )
+        db.first_collection.aggregate( [pipeline], <optional params> ) - performs an aggregation on a collection; returns a cursor
+        db.first_collection.remove(query)
+        db.first_collection.renameCollection( newName , <dropTarget> ) renames the collection.
+        db.first_collection.runCommand( name , <options> ) runs a db command with the given name where the first param is the collection name
+        db.first_collection.save(obj)
+        db.first_collection.stats()
+        db.first_collection.storageSize() - includes free space allocated to this collection
+        db.first_collection.totalIndexSize() - size in bytes of all the indexes
+        db.first_collection.totalSize() - storage allocated for all data and indexes
+        db.first_collection.update(query, object[, upsert_bool, multi_bool]) - instead of two flags, you can pass an object with fields: upsert, multi
+        db.first_collection.validate( <full> ) - SLOW
+        db.first_collection.getShardVersion() - only for use with sharding
+        db.first_collection.getShardDistribution() - prints statistics about data distribution in the cluster
+        db.first_collection.getSplitKeysForChunks( <maxChunkSize> ) - calculates split points over all chunks and returns splitter function
+        db.first_collection.getWriteConcern() - returns the write concern used for any operations on this collection, inherited from server/db if set
+        db.first_collection.setWriteConcern( <write concern doc> ) - sets the write concern for writes to the collection
+        db.first_collection.unsetWriteConcern( <write concern doc> ) - unsets the write concern for writes to the collection
