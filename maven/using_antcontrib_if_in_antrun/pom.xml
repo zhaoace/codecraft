@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>me.zhaoace</groupId>
+  <artifactId>using-antcontrib-if-in-antrun</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+
+  <build>
+    <defaultGoal>clean package</defaultGoal>
+
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.7</version>
+        <executions>
+          <execution>
+            <id>run ant-contrib-if </id>
+            <phase>package</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target name="package_vizdocs" >
+                <taskdef resource="net/sf/antcontrib/antcontrib.properties"  classpathref="maven.plugin.classpath" />
+                <if>
+                  <available file="${basedir}/key.txt"/>
+                  <then>
+                    <echo> Say hello if key.txt exists!</echo>
+                  </then>
+                  <else>
+                    <echo message="${basedir}/key.txt not exists!" />
+                  </else>
+                </if>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>ant-contrib</groupId>
+            <artifactId>ant-contrib</artifactId>
+            <version>1.0b3</version>
+            <exclusions>
+              <exclusion>
+                <groupId>ant</groupId>
+                <artifactId>ant</artifactId>
+              </exclusion>
+            </exclusions>
+          </dependency>
+          <dependency>
+            <groupId>org.apache.ant</groupId>
+            <artifactId>ant-nodeps</artifactId>
+            <version>1.8.1</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+
+    </plugins>
+  </build>
+
+
+
+</project>
+

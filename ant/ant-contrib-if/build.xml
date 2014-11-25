@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="ant-contrib-if" default="all" >
+
+
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties" />
+    <!--
+    <taskdef resource="net/sf/antcontrib/antlib.xml">
+        <classpath>
+            <pathelement location="/WEB-INF/lib/ant-contrib.jar" />
+        </classpath>
+    </taskdef> -->
+
+    <description>ant-contrib-if </description>
+
+    <target name="all" depends="clean" >
+        <if>
+            <available file="key.txt"/>
+            <then>
+                <echo> replace if exists. </echo>
+            </then>
+            <elseif>
+                <available file="another-key.txt"/>
+                <then>
+                    <echo> elesif</echo>
+                </then>
+            </elseif>
+            <else>
+                <echo message="Not be matched." />
+            </else>
+        </if>
+    </target>
+
+    <target name="clean" >
+    </target>
+
+</project>
