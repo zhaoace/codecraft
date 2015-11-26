@@ -5,22 +5,28 @@
 #   git config --global core.excludesfile ~/.gitignore_global
 
 
-
 # Exclude IDE settings.
 .idea
 .ipynb_checkpoints
 
-*saponly*
 
+# Exclude logs.
+helmut.log
+
+
+# Exclude compiling files.
+.cache
+__pycache__
+*.pyc
+*.class
+maven/**/target/**
+
+
+# Exclulde tmp files.
 **/bin/*
 /bat/perforce/p4info
-
-
-**.class
 ruby/projects/genP4script/output/
-**sap.*
 python/learnpythonthehardway.org/test2.txt
-*.pyc
 python/projects/hello_world/
 python/learnpythonthehardway.org/temp.py
 ruby/temp.rb
@@ -28,6 +34,5 @@ python/projects/autopush_p4/autopush/1_run_p4.bat
 python/projects/autopush_p4/autopush/0_pending_list.txt
 python/projects/autopush_p4/autopush/2_run_p4_2.bat
 ruby/projects/portal/test.rb
-maven/**/target/**
 
 
