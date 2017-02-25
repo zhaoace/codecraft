@@ -5,6 +5,9 @@
 #   git config --global core.excludesfile ~/.gitignore_global
 
 
+# Exclude OS files.
+.DS_Store
+
 # Exclude IDE settings.
 .idea
 .ipynb_checkpoints
