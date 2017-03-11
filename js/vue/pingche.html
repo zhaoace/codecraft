@@ -1,0 +1,166 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<style>
+.container {
+    color: maroon;
+    margin: 40px;
+}
+tr {
+  margin-top: 10px;
+  padding-top: 20px;
+}
+td {
+  margin: 30px;
+  padding-left: 15px;
+  padding-top: 10px;
+}
+</style>
+
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+
+
+<div class='container' id="app">
+
+
+  <ul>
+    <li><p>付给姚大哥 = {{ pay_total}}</p></li>
+    <li><p>立立应付 = {{ zhaoli}}</p></li>
+    <li><p>艾总应付 = {{ aizong}}</p></li>
+  </ul>
+
+
+  <table >
+    <tr>
+      <td> <button class='btn btn-defualt btn-lg' disabled="true" > 周一 </button>  </td>
+      <td><button class='btn btn-info ' @click="addToDay(1,'zhaoli', $event)"> zhaoli </button></td>
+      <td><button class='btn btn-info ' @click="addToDay(1,'aizong',$event)"> aizong </button></td>
+    </tr>
+    <tr>
+      <td> <button class='btn btn-defualt btn-lg' disabled="true" > 周二 </button> </td>
+      <td><button class='btn btn-info ' @click="addToDay(2,'zhaoli',$event)"> zhaoli </button></td>
+      <td><button class='btn btn-info ' @click="addToDay(2,'aizong',$event)"> aizong </button></td>
+    </tr>
+    <tr>
+      <td> <button class='btn btn-defualt btn-lg' disabled="true" > 周三 </button> </td>
+      <td><button class='btn btn-info ' @click="addToDay(3,'zhaoli',$event)"> zhaoli </button></td>
+      <td><button class='btn btn-info ' @click="addToDay(3,'aizong',$event)"> aizong </button></td>
+    </tr>
+    <tr>
+      <td> <button class='btn btn-defualt btn-lg' disabled="true" > 周四 </button> </td>
+      <td><button class='btn btn-info ' @click="addToDay(4,'zhaoli',$event)"> zhaoli </button></td>
+      <td><button class='btn btn-info ' @click="addToDay(4,'aizong',$event)"> aizong </button></td>
+    </tr>
+    <tr>
+      <td> <button class='btn btn-defualt btn-lg' disabled="true" > 周五 </button> </td>
+      <td><button class='btn btn-info ' @click="addToDay(5,'zhaoli',$event)"> zhaoli </button></td>
+      <td><button class='btn btn-info ' @click="addToDay(5,'aizong',$event)"> aizong </button></td>
+    </tr>
+    <tr>
+      <td> <button class='btn btn-defualt btn-lg' disabled="true" > 周六 </button> </td>
+      <td><button class='btn btn-info ' @click="addToDay(6,'zhaoli',$event)"> zhaoli </button></td>
+      <td><button class='btn btn-info ' @click="addToDay(6,'aizong',$event)"> aizong </button></td>
+    </tr>
+    <tr>
+      <td> <button class='btn btn-defualt btn-lg' disabled="true" > 周日 </button> </td>
+      <td><button class='btn btn-info ' @click="addToDay(7,'zhaoli',$event)"> zhaoli </button></td>
+      <td><button class='btn btn-info ' @click="addToDay(7,'aizong',$event)"> aizong </button></td>
+    </tr>
+  </table>
+</div>
+
+
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+<script type="text/javascript">
+var app = new Vue({
+  el: '#app',
+  data: {
+    message: 'Messages!',
+    flash: 'Flash!',
+    pay_days: [[]],
+    pay_total: 0,
+    zhaoli: 0,
+    aizong: 0,
+  } ,
+  methods: {
+    addToDay: function(day, who,event){
+      if (event.srcElement.className === 'btn btn-info '){
+        event.srcElement.className = 'btn btn-danger btn-lg';
+      } else{
+        event.srcElement.className = 'btn btn-info ';
+      }
+
+      day_index = day - 1;
+
+      if (this.pay_days[day_index] !== undefined){
+
+        if ( this.pay_days[day_index].find(function(o) {return o === who; })){
+          var index = this.pay_days[day_index].indexOf(who);
+          this.pay_days[day_index].splice(index, 1);
+        } else {
+          this.pay_days[day_index].push(who);
+        }
+      }
+      else{
+        this.pay_days[day_index] = [];
+        this.pay_days[day_index].push(who);
+      }
+      this.message = this.pay_days[day_index];
+
+      this.getTotayPays();
+    },
+    getTotayPays: function(){
+      // console.log("GetTotayPays():");
+      this.pay_total = 0;
+      this.zhaoli = 0;
+      this.aizong = 0;
+
+      for( day in this.pay_days){
+        day_index = day ;
+
+        // console.log(day_index);
+        // console.log(this.pay_days[day_index]);
+        // console.log(this.pay_days[day_index].length);
+        if(this.pay_days[day_index].length === 0){
+          this.pay_total += 0;
+        } else if (this.pay_days[day_index].length === 1){
+          this.pay_total += 30;
+          if(this.pay_days[day_index].find(function(o) { return o === 'zhaoli'; })){
+              this.zhaoli +=30;
+          }
+          if(this.pay_days[day_index].find(function(o) { return o === 'aizong'; })){
+              this.aizong +=30;
+          }
+        }
+        else {
+          this.pay_total += 35;
+          if(this.pay_days[day_index].find(function(o) { return o === 'zhaoli'; })){
+            this.zhaoli +=17.5;
+          }
+          if(this.pay_days[day_index].find(function(o) { return o === 'aizong'; })){
+            this.aizong +=17.5;
+          }
+
+        }
+      }
+      // console.log("pay_total");
+      // console.log(this.pay_total);
+      return this.pay_total;
+    },
+    reset: function(){
+      this.pay_days = [[]];
+      this.getTotayPays();
+
+    }
+  },
+  computed: {
+    // a computed getter
+    payDaysLength: function () {
+      // `this` points to the vm instance
+      return this.pay_days.length;
+    }
+  }
+})
+
+</script>
+
