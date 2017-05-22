@@ -6,10 +6,12 @@ import os
 from openpyxl import load_workbook
 from openpyxl import Workbook
 
+TEMP_EXCEL_NAME='example.xlsx'
+
 
 def example_reading_excel():
-    wb = load_workbook(filename='balances.xlsx', read_only=True)
-    ws = wb['MySheet']
+    wb = load_workbook(filename=TEMP_EXCEL_NAME, read_only=True)
+    ws = wb.active
 
     for row in ws.rows:
         for cell in row:
@@ -17,17 +19,18 @@ def example_reading_excel():
 
 def example_writing_excel():
     wb = Workbook()
-    ws = wb.create_sheet("MySheet")
-    d = ws.cell(row=4, column=2, value=10)
-    wb.save('balances.xlsx')
+    ws = wb.active
+    for i in range(1,5):
+        d = ws.cell(row=i, column=1, value=10)
+    wb.save(TEMP_EXCEL_NAME)
 
 
 def test_writing_and_reading():
     example_writing_excel()
     example_reading_excel()
-    if os.path.isfile('balances.xlsx') :
-        print "remove temp file 'balances.xlsx'"
-        os.remove('balances.xlsx')
+    if os.path.isfile(TEMP_EXCEL_NAME) :
+        print "remove temp file TEMP_EXCEL_NAME"
+        os.remove(TEMP_EXCEL_NAME)
 
 
 
