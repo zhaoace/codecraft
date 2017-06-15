@@ -1,0 +1,53 @@
+swagger: "2.0"
+
+info:
+  version: 1.0.0
+  title: PerfHarness API
+  description: API to expose perfHarness service out.
+
+schemes:
+  - https
+host: perfharness.sv.splunk.com
+basePath: /api
+
+paths:
+  /persons:
+    get:
+      summary: collect testcases
+      description: Returns a list containing all testcases collected by perf-harness-collect.
+      parameters:
+       - name: repo
+         in: query
+         description: Git repo to collect
+         type: string
+       - name: marker
+         in: query
+         description: Markers to collect, e.g. priority
+         type: array
+         collectionFormat: csv
+         items:
+          type: string
+       - name: feature
+         in: query
+         description: Feature to collect
+         type: array
+         collectionFormat: csv
+         items:
+          type: string
+      responses:
+        200:
+          description: A list of testcases
+          schema:
+            type: array
+            items:
+              required:
+                - testFolder
+                - testSuits
+                - testRunner
+              properties:
+                testFolder:
+                  type: string
+                testSuits:
+                  type: string
+                testRunner:
+                  type: string
