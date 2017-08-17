@@ -16,7 +16,7 @@ rm -f firefox.tar.bz2
 FIREFOX_CURRENT=$(which firefox)
 echo "FIREFOX_CURRENT: ${FIREFOX_CURRENT}"
 sudo unlink ${FIREFOX_CURRENT}
-ll /usr/local/firefox/${FF_VERSION}/
+ls -la /usr/local/firefox/${FF_VERSION}/
 sudo ln -s /usr/local/firefox/${FF_VERSION}/firefox /usr/bin/firefox
 
 echo "FIREFOX_CURRENT: ${FIREFOX_CURRENT} "
